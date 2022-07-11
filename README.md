@@ -12,39 +12,45 @@
 - Needs an address on the Internet that GitHub can reach
 - Localhost won’t work as other computer can’t resolve to localhost
 
-## ngrok
-- Create a public address that you can send webhooks to
-- Forward those requests to your machine
+## Azure Functions
+- Serverless, event driven experience that extends the existing Azure App Service Platform
+- Micro-services that can be scaled based on demand
+- Think of Azure Functions as Code + Event Data
+- Write code in Azure portal for immediate execution and debugging
+- Easily bind to other Azure Services
+
 
 ## Solution
 - When a new repository is created, an organization event is published.
-- Automate repository branch protection by using a web service listening for organization events. 
+- Automate repository branch protection by using a web service listening for organization events.
+- Automation is deployed to an Azure Function
 - Web service notifies developer @mention in the repository that the protections were added.
+
 
 ## Tools
 - Python 2
-- Flash
-- ngrok
+- Azure Functions
 
 ## Steps
 - Set GH_TOKEN as an env variable
 - Set user value in app.py
-- Start local web service with flash run –host=0.0.0.0 &
-- Start forwarding service with ./ngrok http 5000 &
-- Set forwarding address in the output of the ngrok application
+- Create a function app in Azure
+- Deploy code app.py as an Azure function
+
 
 ## Flow
 - Set up a web hook in the new GitHub organization
-- Set the payload URL to match the forwarding address from ngrok
+- Set the payload URL to match the Azure Function URL
 - Configure organization event to check for new repository
 - Save the Web Hook configuration
+
 
 ## Testing
 - Create a new repository
 - Validate that the branch protection and an issue was created
 
 ## Future Steps
-- Explore Azure Functions
+- Explore other serverless architecture such as AWS Lambda
 - Payload max size at 25 MB. If the organization event has a large payload, webhook may not get fired.
 - Size of the payload tie to the number of branches and tags that were created 
 - Set up monitoring on events and payload
